@@ -21,16 +21,6 @@ npm install @monolithed/logger --save
 yarn add @monolithed/logger
 ```
 
-## Synopsis
-
-```ts
-type Logger = {
-    new (options: Options): {
-        [Method in keyof Pick<Console, Methods>]: Console[Method];
-    };
-};
-```
-
 ## Basic usage
 
 ```typescript
@@ -54,8 +44,6 @@ type Options = {
 ### title 
 
 ```typescript
-import {Logger} from '@monolithed/logger';
-
 const logger = new Logger({title: 'Hello'});
 
 logger.info('World'); // Hello World
@@ -64,8 +52,6 @@ logger.info('World'); // Hello World
 ### debug 
 
 ```typescript
-import {Logger} from '@monolithed/logger';
-
 const logger = new Logger({debug: true});
 
 logger.info('Hello', 'World'); // 01.07.2021, 02:05:34 Hello World
@@ -74,8 +60,6 @@ logger.info('Hello', 'World'); // 01.07.2021, 02:05:34 Hello World
 ### format 
 
 ```typescript
-import {Logger} from '@monolithed/logger';
-
 const logger = new Logger({
     format(...message) {
         return ['Hello', ...message]
@@ -94,8 +78,6 @@ type Methods = 'debug' | 'error' | 'info' | 'log' | 'warn';
 A wide variety of [Console API](https://developer.mozilla.org/en-US/docs/Web/API/Console) methods are available out of the box.
 
 ```typescript
-import {Logger} from '@monolithed/logger';
-
 const logger = new Logger({title: 'Hello'});
 
 logger.error('World'); // Hello World
