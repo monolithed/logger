@@ -21,6 +21,29 @@ npm install @monolithed/logger --save
 yarn add @monolithed/logger
 ```
 
+## Synopsis
+
+```typescript
+declare type LoggerOptions = {
+    title?: string;
+    debug?: boolean;
+    silent?: boolean;
+    format?: (...messages: unknown[]) => unknown[];
+};
+
+declare type LoggerMethods = 'debug' | 'error' | 'info' | 'log' | 'warn';
+
+declare type Constructor = {
+    new(options: LoggerOptions): {
+        [Method in keyof Pick<Console, LoggerMethods>]: Console[Method];
+    };
+};
+
+declare type LoggerEventDetail = any;
+
+declare const LoggerEventType = '@monolithed/logger';
+```
+
 ## Basic usage
 
 ```typescript
@@ -44,6 +67,8 @@ type Options = {
 ### title 
 
 ```typescript
+import {Logger} from '@monolithed/logger';
+
 const logger = new Logger({title: 'Hello'});
 
 logger.info('World'); // Hello World
@@ -52,9 +77,23 @@ logger.info('World'); // Hello World
 ### debug 
 
 ```typescript
+import {Logger} from '@monolithed/logger';
+
 const logger = new Logger({debug: true});
 
 logger.info('Hello', 'World'); // 01.07.2021, 02:05:34 Hello World
+```
+
+### silent 
+
+Use the silent option to suppress console output. All messages will be captured in the global event "@monolithed/logger"
+
+```typescript
+import {Logger} from '@monolithed/logger';
+
+const logger = new Logger({silent: true});
+
+logger.info('Hello'); // This message is not visible
 ```
 
 ### format 
@@ -78,9 +117,28 @@ type Methods = 'debug' | 'error' | 'info' | 'log' | 'warn';
 A wide variety of [Console API](https://developer.mozilla.org/en-US/docs/Web/API/Console) methods are available out of the box.
 
 ```typescript
+import {Logger} from '@monolithed/logger';
+
 const logger = new Logger({title: 'Hello'});
 
 logger.error('World'); // Hello World
+```
+
+### Event
+
+```typescript
+import {Logger, LoggerEventDetail, LoggerEventType} from '@monolithed/logger';
+
+const messages = [];
+const logger = new Logger({silent: true});
+
+globalThis.addEventListener(LoggerEventType, ({detail}: CustomEvent<LoggerEventDetail[]>) => {
+    messages.push(detail);
+});
+
+logger.log('Hello');
+
+console.log(messages); // ["Hello"] 
 ```
 
 ## Contributing

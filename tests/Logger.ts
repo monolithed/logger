@@ -1,6 +1,11 @@
 import * as assert from 'assert';
 import {SinonSpy, createSandbox} from 'sinon';
-import {Logger} from '../';
+
+import {
+    Logger,
+    LoggerEventDetail,
+    LoggerEventType
+} from '..';
 
 type SinonConsole = Console & SinonSpy;
 
@@ -25,7 +30,7 @@ describe('Logger', () => {
         ));
     });
 
-    it('.title', async () => {
+    it('The title option', async () => {
         const logger = new Logger({title: 'Hello'});
 
         logger.log('World');
@@ -35,7 +40,7 @@ describe('Logger', () => {
         ));
     });
 
-    it('.debug', async () => {
+    it('The debug option', async () => {
         const logger = new Logger({debug: true});
         const date = new Date();
 
@@ -46,7 +51,7 @@ describe('Logger', () => {
         ));
     });
 
-    it('.format', async () => {
+    it('The format option', async () => {
         const logger = new Logger({
             format(message) {
                 return [message, 'World'];
@@ -76,5 +81,25 @@ describe('Logger', () => {
         assert((<SinonConsole>console.log).calledWith(
             date.toLocaleString(), 'Hello', 'World', '!'
         ));
+    });
+
+    it('Event with silent mode', () => {
+        const expected = {
+            'detail': ['Hello World']
+        };
+
+        let actual;
+
+        globalThis.addEventListener(LoggerEventType, ({detail}: CustomEvent<LoggerEventDetail[]>) => {
+            actual = detail;
+        });
+
+        const logger = new Logger({silent: true});
+
+        logger.log('Hello World');
+
+        assert.deepStrictEqual(expected, actual);
+
+        assert((<SinonConsole>console.log).notCalled);
     });
 });
