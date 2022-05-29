@@ -23,27 +23,6 @@ yarn add @monolithed/logger
 
 ## Synopsis
 
-```typescript
-declare type LoggerOptions = {
-    title?: string;
-    debug?: boolean;
-    silent?: boolean;
-    format?: (...messages: unknown[]) => unknown[];
-};
-
-declare type LoggerMethods = 'debug' | 'error' | 'info' | 'log' | 'warn';
-
-declare type Constructor = {
-    new(options: LoggerOptions): {
-        [Method in keyof Pick<Console, LoggerMethods>]: Console[Method];
-    };
-};
-
-declare type LoggerEventDetail = any;
-
-declare const LoggerEventType = '@monolithed/logger';
-```
-
 ## Basic usage
 
 ```typescript
@@ -127,12 +106,12 @@ logger.error('World'); // Hello World
 ### Event
 
 ```typescript
-import {Logger, LoggerEventDetail, LoggerEventType} from '@monolithed/logger';
+import {Logger} from '@monolithed/logger';
 
 const messages = [];
 const logger = new Logger({silent: true});
 
-globalThis.addEventListener(LoggerEventType, ({detail}: CustomEvent<LoggerEventDetail[]>) => {
+globalThis.addEventListener(Logger.EVENT_TYPE, ({detail}: CustomEvent<string[]>) => {
     messages.push(detail);
 });
 

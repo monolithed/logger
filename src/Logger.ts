@@ -1,4 +1,4 @@
-import {dispatchLoggerEvent} from './LoggerEvent';
+import {LoggerEvent} from './LoggerEvent';
 
 type LoggerOptions = {
     title?: string;
@@ -13,6 +13,8 @@ type Constructor = {
     new(options: LoggerOptions): {
         [Method in keyof Pick<Console, LoggerMethods>]: Console[Method];
     };
+
+    EVENT_TYPE: typeof LoggerEvent.EVENT_TYPE;
 };
 
 const Logger = function ({title, debug, silent, format}: LoggerOptions = {}) {
@@ -39,15 +41,21 @@ const Logger = function ({title, debug, silent, format}: LoggerOptions = {}) {
                     console[name](...data);
                 }
 
-                dispatchLoggerEvent(data);
+                const event = new LoggerEvent(LoggerEvent.EVENT_TYPE, {
+                    detail: data
+                });
+
+                globalThis.dispatchEvent(event);
             };
         }
     });
 } as unknown as Constructor;
 
+Logger.EVENT_TYPE = LoggerEvent.EVENT_TYPE;
+
 export {Logger};
 
 export type {
     LoggerMethods,
-    LoggerOptions,
+    LoggerOptions
 };

@@ -1,31 +1,17 @@
-const LoggerEventType  = '@monolithed/logger';
-
-type LoggerEventDetail = any;
-
-class LoggerEvent extends CustomEvent<LoggerEventDetail> {
-    constructor(type: string, detail: {detail: LoggerEventDetail[]}) {
-        super(LoggerEventType, {detail});
+class LoggerEvent extends CustomEvent<any> {
+    constructor(type: string, detail: {detail: any[]}) {
+        super(LoggerEvent.EVENT_TYPE, {detail});
     }
+
+    static readonly EVENT_TYPE = '@monolithed/logger';
 }
-
-const dispatchLoggerEvent = (detail: LoggerEventDetail[]): void => {
-    const event = new LoggerEvent(LoggerEventType, {detail});
-
-    globalThis.dispatchEvent(event);
-};
 
 declare global {
     interface WindowEventMap {
-        [LoggerEventType]: LoggerEvent;
+        [LoggerEvent.EVENT_TYPE]: LoggerEvent;
     }
 }
 
 export {
-    LoggerEvent,
-    LoggerEventType,
-    dispatchLoggerEvent
-};
-
-export type {
-    LoggerEventDetail
+    LoggerEvent
 };

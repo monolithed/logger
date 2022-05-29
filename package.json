@@ -1,8 +1,8 @@
 {
     "name": "@monolithed/logger",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "A simple logger",
-    "author": "Alexander Abashkin <monolithed@gmail.com>",
+    "author": "Aleksandr A <monolithed@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -12,11 +12,18 @@
         "test": "npm prune && tsc && jest",
         "tsc": "tsc"
     },
+    "jest": {
+        "testEnvironment": "jsdom",
+        "testMatch": [
+            "**/tests/**/*.js"
+        ]
+    },
     "devDependencies": {
-        "@types/jest": "^26.0.24",
-        "@types/sinon": "^10.0.2",
-        "jest": "^27.0.6",
-        "sinon": "^11.1.1",
-        "typescript": "^4.3.5"
+        "@types/jest": "^27.5.1",
+        "@types/sinon": "^10.0.11",
+        "jest": "^28.1.0",
+        "jest-environment-jsdom": "^28.1.0",
+        "sinon": "^14.0.0",
+        "typescript": "^4.7.2"
     }
 }

@@ -1,11 +1,6 @@
 import * as assert from 'assert';
 import {SinonSpy, createSandbox} from 'sinon';
-
-import {
-    Logger,
-    LoggerEventDetail,
-    LoggerEventType
-} from '..';
+import {Logger,} from '..';
 
 type SinonConsole = Console & SinonSpy;
 
@@ -90,7 +85,7 @@ describe('Logger', () => {
 
         let actual;
 
-        globalThis.addEventListener(LoggerEventType, ({detail}: CustomEvent<LoggerEventDetail[]>) => {
+        globalThis.addEventListener(Logger.EVENT_TYPE, ({detail}: CustomEvent<string[]>) => {
             actual = detail;
         });
 
