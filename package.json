@@ -2,7 +2,6 @@
     "name": "@monolithed/logger",
     "version": "1.0.0",
     "description": "A simple logger",
-    "author": "Aleksandr A <monolithed@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
