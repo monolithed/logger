@@ -1,6 +1,5 @@
 # @monolithed/logger
 
-[![Build Status](https://travis-ci.org/monolithed/logger.png)](https://travis-ci.org/monolithed/logger)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
 
 A simple logger
